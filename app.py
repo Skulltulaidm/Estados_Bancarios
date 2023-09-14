@@ -28,7 +28,7 @@ if uploaded_file is not None:
         df = banregio.process_pdf(uploaded_file)
         # Muestra el DataFrame en la app
     elif option == 'Banbajio':
-        df = banbajio.process_pdf_banbajio(uploaded_file)    
+        df = banbajio.process_pdf(uploaded_file)    
         
     st.write(df)
     # Descargar como CSV
