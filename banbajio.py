@@ -2,7 +2,7 @@ import re
 import pandas as pd
 import fitz
 
-def process_pdf_bajio(uploaded_file):
+def process_pdf_banbajio(uploaded_file):
     """Procesa un archivo PDF del Banco Bajío y devuelve un DataFrame de Pandas."""
 
     def extract_pdf_text(file):
