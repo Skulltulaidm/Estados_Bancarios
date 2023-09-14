@@ -5,13 +5,12 @@ import fitz
 def process_pdf_banbajio(uploaded_file):
     """Procesa un archivo PDF del Banco Bajío y devuelve un DataFrame de Pandas."""
 
-    def extract_pdf_text(file):
+    def extract_pdf_text(uploaded_file):
         all_text = ""
-        pdf_document = fitz.open(file)
-        for page_number in range(len(pdf_document)):
-            page = pdf_document.load_page(page_number)
-            all_text += page.get_text() + "\n"
-        pdf_document.close()
+        with fitz.open(stream=stream, filetype="pdf") as pdf_document:
+            for page_number in range(len(pdf_document)):
+                page = pdf_document.load_page(page_number)
+                all_text += page.get_text() + "\n"
         return all_text
 
     def find_matches(text):
