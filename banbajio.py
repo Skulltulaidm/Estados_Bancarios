@@ -5,7 +5,7 @@ import fitz
 def process_pdf_banbajio(uploaded_file):
     """Procesa un archivo PDF del Banco Bajío y devuelve un DataFrame de Pandas."""
 
-    def extract_pdf_text(uploaded_file):
+    def extract_pdf_text(file):
         all_text = ""
         with fitz.open(stream=uploaded_file, filetype="pdf") as pdf_document:
             for page_number in range(len(pdf_document)):
