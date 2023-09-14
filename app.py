@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
-import importlib
+import base64
+import banregio  # Importa todo el módulo banregio.py
 
 # Para descargar archivos CSV
 def download_csv(df, filename="data.csv"):
@@ -19,15 +20,11 @@ uploaded_file = st.file_uploader("Sube tu archivo PDF", type=["pdf"])
 
 if uploaded_file is not None:
     st.write("Archivo subido. Procesando...")
-
-    # Importamos el archivo .py correspondiente al banco seleccionado
-    bank_module = importlib.import_module(option.lower())
-
-    # Procesamos el archivo PDF para obtener el DataFrame
-    df = bank_module.process_pdf(uploaded_file)
-
-    # Muestra el DataFrame en la app
-    st.write(df)
-
-    # Descargar como CSV
-    download_csv(df, f"{option}_data.csv")
+    
+    if option == 'Banregio':
+        # Utiliza la función de banregio.py para procesar el archivo
+        df = banregio.process_pdf(uploaded_file)
+        # Muestra el DataFrame en la app
+        st.write(df)
+        # Descargar como CSV
+        download_csv(df, f"{option}_data.csv")
