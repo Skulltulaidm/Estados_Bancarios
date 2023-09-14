@@ -20,13 +20,14 @@ option = st.selectbox("Selecciona tu banco", ("Banregio", "Banbajio", "BancoY"))
 uploaded_file = st.file_uploader("Sube tu archivo PDF", type=["pdf"])
 
 if uploaded_file is not None:
+    
     st.write("Archivo subido. Procesando...")
     
     if option == 'Banregio':
         # Utiliza la función de banregio.py para procesar el archivo
         df = banregio.process_pdf(uploaded_file)
         # Muestra el DataFrame en la app
-    elif option == 'Bajio':
+    elif option == 'Banbajio':
         df = banbajio.process_pdf_banbajio(uploaded_file)    
         
     st.write(df)
