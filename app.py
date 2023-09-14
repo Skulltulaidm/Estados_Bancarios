@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import base64
 import banregio  # Importa todo el módulo banregio.py
+import banbajio
 
 # Para descargar archivos CSV
 def download_csv(df, filename="data.csv"):
