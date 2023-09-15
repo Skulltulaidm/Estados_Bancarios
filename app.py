@@ -4,7 +4,7 @@ import base64
 import banregio  # Importa todo el módulo banregio.py
 import banbajio
 import monex
-import banorteFormato1
+import banorteFormatoDesorden
 
 # Para descargar archivos CSV
 def download_csv(df, filename="data.csv"):
@@ -34,8 +34,7 @@ if uploaded_file is not None:
     elif option == 'Monex':
         df = monex.process_pdf(uploaded_file)
     elif option == 'Banorte-1':
-        df = banorteFormato1.process_pdf(uploaded_file)    
-    
+        df = banorteFormatoDesorden.process_pdf(uploaded_file)    
         
     st.write(df)
     # Descargar como CSV
