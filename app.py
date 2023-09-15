@@ -14,7 +14,7 @@ def download_csv(df, filename="data.csv"):
     st.markdown(href, unsafe_allow_html=True)
 
 # Cargamos el menú para seleccionar el banco
-st.title("Conversor de Extractos Bancarios a CSV")
+st.title("APP EIM Consultoria para conversor de Estados de Cuenta Bancarios a CSV")
 st.write("Selecciona tu banco y sube tu archivo PDF")
 
 option = st.selectbox("Selecciona tu banco", ("Banregio", "Banbajio", "Monex", "Banorte-1"))
