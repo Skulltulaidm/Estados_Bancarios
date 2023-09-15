@@ -14,7 +14,7 @@ def process_pdf(uploaded_file):
         return all_text
 
     def find_matches(text):
-        pattern_flexible = re.compile(
+        pattern = re.compile(
             r'(\d{2}/\d{2}/\d{4})\s+'  # Fecha de operación
             r'(\d{2}/\d{2}/\d{4})\s+'  # Fecha
             r'(\d{10})?\s*'  # Referencia (hacerlo más flexible)
@@ -26,12 +26,11 @@ def process_pdf(uploaded_file):
             r'(\d{4})\s+'  # Movimiento
             r'(.*?)\s*'    # Descripción Detallada (opcional)
             r'(?:(-)|(\$?(?!0{1,3}\.\d{2})\d{1,3}(?:,\d{3})*\.\d{2}))\s*'  # Cheque (guion o monto no "00.00")
-        )
-
-        return pattern_flexible.findall(text)
+        )      
+        return pattern.findall(text)
 
     def create_dataframe(matches):
-        data_flexible = []
+        data = []
         for match in matches:
             cod_transacc = match[4]
             cantidad = match[6]
@@ -39,7 +38,7 @@ def process_pdf(uploaded_file):
             retiro = cantidad if cod_transacc != '003' else '0'
             cheque = match[10] if match[10] != '' else match[11]
 
-            data_flexible.append({
+            data.append({
                 'Fecha Operacion': match[0],
                 'Fecha': match[1],
                 'Referencia': match[2],
