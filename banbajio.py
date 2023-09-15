@@ -14,14 +14,14 @@ def process_pdf(uploaded_file):
         return all_text
 
     def find_matches(text):
-        pattern_new = re.compile(
+        pattern = re.compile(
             r'(\d{1,2} (?:JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC))\s+'  # Fecha
             r'(\d{7}|\d{3}|(?<=\s)\s)?\s+'  # Referencia (7 or 3 digits, optional)
             r'(.+?)\s+'  # Descripción larga
             r'(\$\s*\d{1,3}(?:,\d{3})*\.\d{2})?\s+'  # Deposito/Retiro
             r'(\$\s*\d{1,3}(?:,\d{3})*\.\d{2})?\s+'  # Saldo
         )
-        return pattern_flexible.findall(text)
+        return pattern.findall(text)
 
     def create_dataframe(matches):
         data_flexible = []

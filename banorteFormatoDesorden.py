@@ -32,7 +32,7 @@ def process_pdf(uploaded_file):
 
     def create_dataframe(matches):
         data_flexible = []
-        for match in matches_flexible:
+        for match in matches:
             cod_transacc = match[4]
             cantidad = match[6]
             deposito = cantidad if cod_transacc == '003' else '0'
