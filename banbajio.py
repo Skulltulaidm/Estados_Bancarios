@@ -7,7 +7,7 @@ def process_pdf(uploaded_file):
 
     def extract_pdf_text(file):
         all_text = ""
-        with fitz.open(stream=file, filetype="pdf") as pdf_document:
+        with fitz.open(stream=uploaded_file.read(), filetype="pdf") as pdf_document:
             for page_number in range(len(pdf_document)):
                 page = pdf_document.load_page(page_number)
                 all_text += page.get_text() + "\n"
