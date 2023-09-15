@@ -15,7 +15,7 @@ def download_csv(df, filename="data.csv"):
 st.title("Conversor de Extractos Bancarios a CSV")
 st.write("Selecciona tu banco y sube tu archivo PDF")
 
-option = st.selectbox("Selecciona tu banco", ("Banregio", "Banbajio", "BancoY"))
+option = st.selectbox("Selecciona tu banco", ("Banregio", "Banbajio", "Monex"))
 
 uploaded_file = st.file_uploader("Sube tu archivo PDF", type=["pdf"])
 
@@ -28,7 +28,10 @@ if uploaded_file is not None:
         df = banregio.process_pdf(uploaded_file)
         # Muestra el DataFrame en la app
     elif option == 'Banbajio':
-        df = banbajio.process_pdf(uploaded_file)    
+        df = banbajio.process_pdf(uploaded_file)
+    elif option == 'Monex':
+        df = monex.process_pdf_monex(uploaded_file)
+    
         
     st.write(df)
     # Descargar como CSV
