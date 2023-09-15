@@ -4,6 +4,7 @@ import base64
 import banregio  # Importa todo el módulo banregio.py
 import banbajio
 import monex
+import banorteFormato1
 
 # Para descargar archivos CSV
 def download_csv(df, filename="data.csv"):
@@ -16,7 +17,7 @@ def download_csv(df, filename="data.csv"):
 st.title("Conversor de Extractos Bancarios a CSV")
 st.write("Selecciona tu banco y sube tu archivo PDF")
 
-option = st.selectbox("Selecciona tu banco", ("Banregio", "Banbajio", "Monex"))
+option = st.selectbox("Selecciona tu banco", ("Banregio", "Banbajio", "Monex", "Banorte-1"))
 
 uploaded_file = st.file_uploader("Sube tu archivo PDF", type=["pdf"])
 
@@ -32,6 +33,8 @@ if uploaded_file is not None:
         df = banbajio.process_pdf(uploaded_file)
     elif option == 'Monex':
         df = monex.process_pdf(uploaded_file)
+    elif option == 'Banorte-1':
+        df = banorteFormato1.process_pdf(uploaded_file)    
     
         
     st.write(df)

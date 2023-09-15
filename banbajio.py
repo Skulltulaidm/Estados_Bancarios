@@ -1,13 +1,13 @@
 import re
 import pandas as pd
-import fitz
+import fitz  # PyMuPDF
 
 def process_pdf(uploaded_file):
-    """Procesa un archivo PDF del Banco Bajío y devuelve un DataFrame de Pandas."""
+    """Procesa un archivo PDF de Banorte y devuelve un DataFrame de Pandas."""
 
     def extract_pdf_text(file):
         all_text = ""
-        with fitz.open(stream=uploaded_file.read(), filetype="pdf") as pdf_document:
+        with fitz.open(stream=file.read(), filetype="pdf") as pdf_document:
             for page_number in range(len(pdf_document)):
                 page = pdf_document.load_page(page_number)
                 all_text += page.get_text() + "\n"
@@ -21,10 +21,10 @@ def process_pdf(uploaded_file):
             r'(\$\s*\d{1,3}(?:,\d{3})*\.\d{2})?\s+'  # Deposito/Retiro
             r'(\$\s*\d{1,3}(?:,\d{3})*\.\d{2})?\s+'  # Saldo
         )
-        return pattern_new.findall(text)
+        return pattern_flexible.findall(text)
 
     def create_dataframe(matches):
-        data = []
+        data_flexible = []
         for match in matches:
             referencia = match[1]
             cantidad = match[3]
@@ -42,7 +42,7 @@ def process_pdf(uploaded_file):
                 'Retiros': retiro,
                 'Saldo': match[4],
             })
-        return pd.DataFrame(data)
+        return pd.DataFrame(data_flexible)
 
     all_text = extract_pdf_text(uploaded_file)
     matches = find_matches(all_text)
