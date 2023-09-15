@@ -8,8 +8,8 @@ import banorteFormatoDesorden
 
 # Para descargar archivos CSV
 def download_csv(df, filename="data.csv"):
-    csv = df.to_csv(index=False)
-    b64 = base64.b64encode(csv.encode()).decode()
+    csv = df.to_csv(index=False, encoding='utf-8-sig')  # Especifica el encoding aquí
+    b64 = base64.b64encode(csv.encode('utf-8-sig')).decode()  # Y también aquí
     href = f'<a href="data:file/csv;base64,{b64}" download="{filename}">Descargar archivo CSV</a>'
     st.markdown(href, unsafe_allow_html=True)
 
