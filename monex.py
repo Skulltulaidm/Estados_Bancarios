@@ -2,7 +2,7 @@ import re
 import pdfplumber
 import pandas as pd
 
-def process_pdf_monex(uploaded_file):
+def process_pdf(uploaded_file):
     """Procesa un archivo PDF del banco Monex y devuelve un DataFrame de Pandas."""
 
     def extract_pdf_text(file):

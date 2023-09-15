@@ -3,6 +3,7 @@ import pandas as pd
 import base64
 import banregio  # Importa todo el módulo banregio.py
 import banbajio
+import monex
 
 # Para descargar archivos CSV
 def download_csv(df, filename="data.csv"):
@@ -30,7 +31,7 @@ if uploaded_file is not None:
     elif option == 'Banbajio':
         df = banbajio.process_pdf(uploaded_file)
     elif option == 'Monex':
-        df = monex.process_pdf_monex(uploaded_file)
+        df = monex.process_pdf(uploaded_file)
     
         
     st.write(df)
