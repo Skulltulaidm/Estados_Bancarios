@@ -5,6 +5,7 @@ import banregio  # Importa todo el módulo banregio.py
 import banbajio
 import monex
 import banorteFormatoDesorden
+import banorteFormato2
 
 # Para descargar archivos CSV
 def download_csv(df, filename="data.csv"):
@@ -17,7 +18,7 @@ def download_csv(df, filename="data.csv"):
 st.title("APP EIM Consultoria para conversor de Estados de Cuenta Bancarios a CSV")
 st.write("Selecciona tu banco y sube tu archivo PDF")
 
-option = st.selectbox("Selecciona tu banco", ("Banregio", "Banbajio", "Monex", "Banorte-1"))
+option = st.selectbox("Selecciona tu banco", ("Banregio", "Banbajio", "Monex", "Banorte-1", "Banorte-2"))
 
 uploaded_file = st.file_uploader("Sube tu archivo PDF", type=["pdf"])
 
@@ -34,7 +35,9 @@ if uploaded_file is not None:
     elif option == 'Monex':
         df = monex.process_pdf(uploaded_file)
     elif option == 'Banorte-1':
-        df = banorteFormatoDesorden.process_pdf(uploaded_file)    
+        df = banorteFormatoDesorden.process_pdf(uploaded_file) 
+    elif option == 'Banorte-2':
+        df = banorteFormato2.process_pdf(uploaded_file)    
         
     st.write(df)
     # Descargar como CSV
