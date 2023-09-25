@@ -26,17 +26,22 @@ def process_pdf(uploaded_file):
         data = []
         for match in matches:
             cod_transacc = match[1]
-            cantidad_str = match[3].replace(",", "")
-            cantidad = float(cantidad_str) if cantidad_str else 0.0
-            cargo = cantidad if cod_transacc == 'TRA' else 0.0
-            abono = cantidad if cod_transacc == 'INT' else 0.0
+            cantidad = match[3]
+
+            if "ABONO" in match[2]:
+                abono = cantidad
+                cargo = '0'
+            else:
+                cargo = cantidad if cod_transacc == 'TRA' else '0'
+                abono = cantidad if cod_transacc == 'INT' else '0'
+
             data.append({
                 'DIA': match[0],
                 'COD. TRANSACC.': match[1],
                 'CONCEPTO': match[2],
                 'CARGO': cargo,
                 'ABONO': abono,
-                'SALDO': float(match[4].replace(",", "")) if match[4] else 0.0
+                'SALDO': match[4]
             })
         return pd.DataFrame(data)
 
