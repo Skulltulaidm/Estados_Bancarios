@@ -23,6 +23,11 @@ def process_pdf(uploaded_file):
         return pattern.findall(text)
 
     def create_dataframe(matches):
+
+        date_match = re.search(r'(\d{2})\s+al\s+(\d{2})\s+de\s+([A-Z]+)\s+(\d{4})', all_text)
+        if date_match:
+            start_day, end_day, month, year = date_match.groups()
+            date_suffix = f"{month[:3]}/{year[2:]}"
         data = []
         for match in matches:
             cod_transacc = match[1]
@@ -35,8 +40,10 @@ def process_pdf(uploaded_file):
                 cargo = cantidad if cod_transacc == 'TRA' else '0'
                 abono = cantidad if cod_transacc == 'INT' else '0'
 
+            dia = f"{match[0]}/{month[:3]}/{year[2:]}"
+
             data.append({
-                'DIA': match[0],
+                'DIA': dia, 
                 'COD. TRANSACC.': match[1],
                 'CONCEPTO': match[2],
                 'CARGO': cargo,
