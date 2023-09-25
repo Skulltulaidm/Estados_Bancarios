@@ -27,8 +27,8 @@ def process_pdf(uploaded_file):
         all_text = ''.join([bloques[i].replace('\n', ' ') + (bloques[i+1] if i+1 < len(bloques) else '') for i in range(0, len(bloques), 2)])
         
         data = []
-        
-        for match in matches_new:
+
+        for match in matches:
             fecha, concepto, valor1, valor2 = match
 
             if "PAGO RECIBIDO" in concepto:
