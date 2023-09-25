@@ -21,10 +21,10 @@ def process_pdf(uploaded_file):
         )
         return pattern.findall(text)
 
-    def create_dataframe(matches):
+    def create_dataframe(matches, original_text):
 
-        bloques = re.split(r'(\d{1,3}(?:,\d{3})*(?:\.\d{2})?)', all_text)
-        all_text = ''.join([bloques[i].replace('\n', ' ') + (bloques[i+1] if i+1 < len(bloques) else '') for i in range(0, len(bloques), 2)])
+        bloques = re.split(r'(\d{1,3}(?:,\d{3})*(?:\.\d{2})?)', original_text)
+        modified_text = ''.join([bloques[i].replace('\n', ' ') + (bloques[i+1] if i+1 < len(bloques) else '') for i in range(0, len(bloques), 2)])
         
         data = []
 
@@ -55,5 +55,5 @@ def process_pdf(uploaded_file):
 
     all_text = extract_pdf_text(uploaded_file)
     matches = find_matches(all_text)
-    df = create_dataframe(matches)
+    df = create_dataframe(matches, all_text)
     return df
