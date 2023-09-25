@@ -7,6 +7,7 @@ import monex
 import banorteFormatoDesorden
 import banorteFormato2
 import santander
+import banamex
 
 # Para descargar archivos CSV
 def download_csv(df, filename="data.csv"):
@@ -19,7 +20,7 @@ def download_csv(df, filename="data.csv"):
 st.title("APP EIM Consultoria para conversor de Estados de Cuenta Bancarios a CSV")
 st.write("Selecciona tu banco y sube tu archivo PDF")
 
-option = st.selectbox("Selecciona tu banco", ("Banregio", "Banbajio", "Monex", "Banorte-1", "Banorte-2", "Santander"))
+option = st.selectbox("Selecciona tu banco", ("Banregio", "Banbajio", "Monex", "Banorte-1", "Banorte-2", "Santander", "Banamex"))
 
 uploaded_file = st.file_uploader("Sube tu archivo PDF", type=["pdf"])
 
@@ -40,7 +41,9 @@ if uploaded_file is not None:
     elif option == 'Banorte-2':
         df = banorteFormato2.process_pdf(uploaded_file)
     elif option == 'Santander':
-        df = santander.process_pdf(uploaded_file)      
+        df = santander.process_pdf(uploaded_file)
+    elif option == 'Banamex':
+        df = banamex.process_pdf(uploaded_file)       
         
     st.write(df)
     # Descargar como CSV
