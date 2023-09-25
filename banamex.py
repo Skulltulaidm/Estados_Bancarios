@@ -44,7 +44,7 @@ def process_pdf(uploaded_file):
             else:
                 saldo = '0.00'
 
-            data_new.append({
+            data.append({
                 'FECHA': fecha,
                 'CONCEPTO': concepto,
                 'RETIRO': retiro,
