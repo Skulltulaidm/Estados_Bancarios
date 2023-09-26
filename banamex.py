@@ -29,7 +29,7 @@ def process_pdf(uploaded_file):
             'FECHA': fecha,
             'CONCEPTO': concepto,
             'RETIRO': '0.00' if "PAGO RECIBIDO" in concepto or "DEPOSITO MIXTO" in concepto else valor1,
-            'DEPOSITOS': valor1 if "PAGO RECIBIDO" in concepto or "DEPOSITO MIXTO" in concepto else '0.00',
+            'DEPOSITOS': valor1 if "PAGO RECIBIDO" in concepto or "DEPOSITO MIXTO" in concepto or "TRASPASO" in concepto else '0.00',
             'SALDO': valor2 if valor2 else '0.00'
         } for fecha, concepto, valor1, valor2 in matches_new]
 
