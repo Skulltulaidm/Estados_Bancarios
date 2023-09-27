@@ -18,7 +18,7 @@ def process_pdf(uploaded_file):
 
     def find_matches(text):
         pattern = re.compile(
-            r'(\d{2} [A-Z]{3})\s+'              # Fecha
+            r'(\d{2} [A-Z]{3}|\d{2}/\d{2}/\d{4})\s+'              # Fecha
             r'(.+?)\s+'                         # Concepto
             r'(\d{1,3}(?:,\d{3})*\.\d{2})?\s*'  # Depósitos o Retiros
             r'(\d{1,3}(?:,\d{3})*\.\d{2})?\s+'  # Saldo, si existe
