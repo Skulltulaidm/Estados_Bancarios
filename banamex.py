@@ -29,9 +29,19 @@ def process_pdf(uploaded_file):
         data = []
         for match in matches:
             fecha, concepto, valor1, valor2 = match
-            deposito = valor1 if "PAGO RECIBIDO" in concepto or "DEPOSITO MIXTO" in concepto or "TRASPASO" in concepto else '0.00'
-            retiro = valor1 if not deposito else '0.00'
-            saldo = valor2 or '0.00'
+
+            if "PAGO RECIBIDO" in concepto or "DEPOSITO MIXTO" in concepto or "TRASPASO" in concepto:
+                deposito = valor1
+                retiro = '0.00'
+            else:
+                deposito = '0.00'
+                retiro = valor1
+
+            # Determinar el saldo
+            if valor2:
+                saldo = valor2
+            else:
+                saldo = '0.00'
             data.append({
                 'FECHA': fecha, 
                 'CONCEPTO': concepto,
