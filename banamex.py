@@ -59,7 +59,7 @@ def process_pdf(uploaded_file):
     # Calcula y muestra el total de retiros y depósitos
     total_retiros = df['RETIRO'].replace('[\$,]', '', regex=True).astype(float).sum()
     total_depositos = df['DEPOSITOS'].replace('[\$,]', '', regex=True).astype(float).sum()
-    print(f'Total de Retiros: ${total_retiros:.2f}')
-    print(f'Total de Depósitos: ${total_depositos:.2f}')
+    st.write(f'Total de Retiros: ${total_retiros:.2f}')
+    st.write(f'Total de Depósitos: ${total_depositos:.2f}')
 
     return df
