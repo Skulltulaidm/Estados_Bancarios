@@ -1,9 +1,9 @@
 import re
-import pandas as pd
 import pdfplumber
+import pandas as pd
 
 def process_pdf(uploaded_file):
-    """Procesa un archivo PDF y devuelve un DataFrame de Pandas."""
+    """Procesa un archivo PDF del banco Banamex y devuelve un DataFrame de Pandas."""
 
     def extract_pdf_text(file):
         all_text = ""
@@ -12,47 +12,37 @@ def process_pdf(uploaded_file):
                 all_text += page.extract_text() + "\n"
         return all_text
 
-    def process_text(all_text):
-        bloques = re.split(r'(\d{1,3}(?:,\d{3})*(?:\.\d{2})?)', all_text)
-        return ''.join([bloques[i].replace('\n', ' ') + (bloques[i+1] if i+1 < len(bloques) else '') for i in range(0, len(bloques), 2)])
+    def preprocess_text(text):
+        bloques = re.split(r'(\d{1,3}(?:,\d{3})*(?:\.\d{2})?)', text)
+        return ''.join([bloques[i].replace('\n', ' ') + (bloques[i+1] if i+1 < len(bloques) else '') for i in range(0, len(bloques), 2)]).strip()
 
-    def extract_data_from_text(processed_text):
-        pattern_new = re.compile(
+    def find_matches(text):
+        pattern = re.compile(
             r'(\d{2} [A-Z]{3})\s+'              # Fecha
             r'(.+?)\s+'                         # Concepto
             r'(\d{1,3}(?:,\d{3})*\.\d{2})?\s*'  # Depósitos o Retiros
             r'(\d{1,3}(?:,\d{3})*\.\d{2})?\s+'  # Saldo, si existe
         )
-        data_new = []
+        return pattern.findall(text)
 
-        for match in matches_new:
+    def create_dataframe(matches):
+        data = []
+        for match in matches:
             fecha, concepto, valor1, valor2 = match
-
-            if "PAGO RECIBIDO" in concepto or "DEPOSITO MIXTO" in concepto or "TRASPASO" in concepto:
-                deposito = valor1
-                retiro = '0.00'
-            else:
-                deposito = '0.00'
-                retiro = valor1
-
-            # Determinar el saldo
-            if valor2:
-                saldo = valor2
-            else:
-                saldo = '0.00'
-
-            data_new.append({
-                'FECHA': fecha,
+            deposito = valor1 if "PAGO RECIBIDO" in concepto or "DEPOSITO MIXTO" in concepto or "TRASPASO" in concepto else '0.00'
+            retiro = valor1 if not deposito else '0.00'
+            saldo = valor2 or '0.00'
+            data.append({
+                'FECHA': fecha, 
                 'CONCEPTO': concepto,
                 'RETIRO': retiro,
                 'DEPOSITOS': deposito,
                 'SALDO': saldo
             })
-
-        return data_new
+        return pd.DataFrame(data)
 
     all_text = extract_pdf_text(uploaded_file)
-    processed_text = process_text(all_text)
-    data = extract_data_from_text(processed_text)
-
-    return pd.DataFrame(data)
+    all_text = preprocess_text(all_text)
+    matches = find_matches(all_text)
+    df = create_dataframe(matches)
+    return df
