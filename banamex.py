@@ -23,15 +23,31 @@ def process_pdf(uploaded_file):
             r'(\d{1,3}(?:,\d{3})*\.\d{2})?\s*'  # Depósitos o Retiros
             r'(\d{1,3}(?:,\d{3})*\.\d{2})?\s+'  # Saldo, si existe
         )
-        matches_new = pattern_new.findall(processed_text)
+        data_new = []
 
-        data_new = [{
-            'FECHA': fecha,
-            'CONCEPTO': concepto,
-            'RETIRO': '0.00' if "PAGO RECIBIDO" in concepto or "DEPOSITO MIXTO" in concepto else valor1,
-            'DEPOSITOS': valor1 if "PAGO RECIBIDO" in concepto or "DEPOSITO MIXTO" in concepto or "TRASPASO" in concepto else '0.00',
-            'SALDO': valor2 if valor2 else '0.00'
-        } for fecha, concepto, valor1, valor2 in matches_new]
+        for match in matches_new:
+            fecha, concepto, valor1, valor2 = match
+
+            if "PAGO RECIBIDO" in concepto or "DEPOSITO MIXTO" in concepto or "TRASPASO" in concepto:
+                deposito = valor1
+                retiro = '0.00'
+            else:
+                deposito = '0.00'
+                retiro = valor1
+
+            # Determinar el saldo
+            if valor2:
+                saldo = valor2
+            else:
+                saldo = '0.00'
+
+            data_new.append({
+                'FECHA': fecha,
+                'CONCEPTO': concepto,
+                'RETIRO': retiro,
+                'DEPOSITOS': deposito,
+                'SALDO': saldo
+            })
 
         return data_new
 
