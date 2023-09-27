@@ -43,8 +43,11 @@ if uploaded_file is not None:
     elif option == 'Santander':
         df = santander.process_pdf(uploaded_file)
     elif option == 'Banamex':
-        df = banamex.process_pdf(uploaded_file) 
-        st.write("Es probable que la última línea de Excel arroje una Comisión que se encuentra al final del estado de cuenta, pero está fuera de los movimientos del mes.")      
+        df, total_retiros, total_depositos = banamex.process_pdf(uploaded_file) 
+        st.write("Es probable que la última línea de Excel arroje una Comisión que se encuentra al final del estado de cuenta, pero está fuera de los movimientos del mes.")  
+        st.dataframe(df)  # Esto mostrará el DataFrame en tu aplicación Streamlit
+        st.write(f'Total de Retiros: ${total_retiros:.2f}')
+        st.write(f'Total de Depósitos: ${total_depositos:.2f}')    
         
     st.write(df)
     # Descargar como CSV
