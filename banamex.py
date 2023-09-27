@@ -30,9 +30,9 @@ def process_pdf(uploaded_file):
         for match in matches:
             fecha, concepto, valor1, valor2 = match
 
-            #keywords = ["PAGO RECIBIDO", "DEPOSITO MIXTO", "TRASPASO", "PCOMP", "F53", "F 56", "MANF", "PAGO D", "F57", "1 D INT", "PAGO POR SERVICIOS DE COMERCIO"]
+            keywords = ["PAGO RECIBIDO", "DEPOSITO MIXTO", "TRASPASO", "PCOMP", "F53", "F 56", "MANF", "PAGO D", "F57", "1 D INT", "SERVICIOS DE COMERCIO"]
 
-            if "PAGO RECIBIDO" in concepto or "DEPOSITO MIXTO" in concepto or "TRASPASO" in concepto or "PCOMP" in concepto or "F53" in concepto or "F 56" in concepto or "MANF" in concepto or "PAGO D" in concepto or "F57" in concepto or "1 D INT" in concepto or "DEPOS" in concepto:
+            if any(keyword in concepto for keyword in keywords):
                 deposito = valor1
                 retiro = '0.00'
             else:
