@@ -55,4 +55,11 @@ def process_pdf(uploaded_file):
     all_text = preprocess_text(all_text)
     matches = find_matches(all_text)
     df = create_dataframe(matches)
+    
+    # Calcula y muestra el total de retiros y depósitos
+    total_retiros = df['RETIRO'].replace('[\$,]', '', regex=True).astype(float).sum()
+    total_depositos = df['DEPOSITOS'].replace('[\$,]', '', regex=True).astype(float).sum()
+    print(f'Total de Retiros: ${total_retiros:.2f}')
+    print(f'Total de Depósitos: ${total_depositos:.2f}')
+
     return df
