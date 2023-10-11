@@ -51,7 +51,7 @@ if uploaded_file is not None:
         st.write(f'Total de Depósitos: ${total_depositos:.2f}')
     elif option == 'BBVA':
         df, total_cargos, total_abonos, count_cargo, count_abono = bbva.process_pdf(uploaded_file) 
-        st.write("Es probable que la últimas o primeras líneas del Excel arroje información random del estado de cuenta, pero está fuera de los movimientos del mes.")  
+        st.write("Es probable que la última línea del Excel arroje información random del estado de cuenta, pero está fuera de los movimientos del mes.")  
         st.write(f'Total de Cargos: ${total_cargos:.2f}')
         st.write(f'Total de Abonos: ${total_abonos:.2f}')  
         st.write(f'Número de Cargos: {count_cargo}')
