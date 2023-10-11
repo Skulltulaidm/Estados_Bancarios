@@ -51,12 +51,12 @@ def process_pdf(uploaded_file):
 
         return pd.DataFrame(data)
 
-    def get_additional_description(all_text, match, idx, matches):
+    def get_additional_description(text, match, idx, matches):
         if idx + 1 < len(matches):
             next_match_start = matches[idx + 1].start()
-            return all_text[match.end():next_match_start].strip()
+            return text[match.end():next_match_start].strip()
         else:
-            return all_text[match.end():].strip()
+            return text[match.end():].strip()
 
     def classify_values(CODIGO, final_des, valor1, valor2, valor3):
         # Case with three prices
