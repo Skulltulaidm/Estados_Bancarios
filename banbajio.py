@@ -36,11 +36,6 @@ def process_pdf(file_path):
                 deposito = '0'
                 retiro = cantidad
 
-            # Combine the Descripción and the Rest of the information
-            #descripcion = match[2]
-            #if match[5]:
-            #    descripcion += ' ' + match[5]
-
             data.append({
                 'Fecha': match[0],
                 'Referencia': match[1],

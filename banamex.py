@@ -38,7 +38,6 @@ def process_pdf(uploaded_file):
                 deposito = '0.00'
                 retiro = valor1
 
-            # Determinar el saldo
             if valor2:
                 saldo = valor2
             else:
@@ -55,12 +54,12 @@ def process_pdf(uploaded_file):
 
     all_text = extract_pdf_text(uploaded_file)
     all_text = preprocess_text(all_text)
+
     matches = find_matches(all_text)
+
     df = create_dataframe(matches)
     
-    # Calcula los totales de retiros y depósitos
     total_retiros = df['RETIRO'].replace('[\$,]', '', regex=True).astype(float).sum()
     total_depositos = df['DEPOSITOS'].replace('[\$,]', '', regex=True).astype(float).sum()
 
-    # Devuelve el DataFrame y los totales
     return df, total_retiros, total_depositos

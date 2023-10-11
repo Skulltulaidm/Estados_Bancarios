@@ -5,7 +5,6 @@ import pandas as pd
 def process_pdf(uploaded_file):
     """Procesa un archivo PDF del banco BBVA y devuelve un DataFrame de Pandas."""
     
-    # Constants
     CARGO_CODES = ['T17', 'P14', 'S39', 'S40', 'X01', 'S39', 'S40', 'G30']
     CARGO_KEYWORDS = ['mopsa', 'PAGO FACTURA', 'Mopsa']
     CARGO_DESC_CODES = ["0164690214", "0482773643", "0116431607", "0116914225", "0105473098", "0119486771", "0476472370", "0112395312", "0100427152", "0114237803", "0115889189", "0111283014", "0450891053", "0132293021", "0119339779", "0166407420", "0115884411", "0112634511", "1540049667", "2775386152", "1273602788"]
@@ -16,7 +15,6 @@ def process_pdf(uploaded_file):
 
     STOP_PHRASE = "BBVA MEXICO, S.A.,"
     
-    # Regular Expression Pattern
     PATTERN = re.compile(r'''
         (\d{2}/[A-Z]{3})\s+             # Fecha OPER
         (\d{2}/[A-Z]{3})\s+             # Fecha LIQ
@@ -79,12 +77,18 @@ def process_pdf(uploaded_file):
 
     all_text = extract_pdf_text(uploaded_file)
     all_text = preprocess_text(all_text)
+    
     data = extract_data(all_text)
+
     df = pd.DataFrame(data)
+
     df['CARGO'] = pd.to_numeric(df['CARGO'].str.replace(',', '').astype(float), errors='coerce')
     df['ABONO'] = pd.to_numeric(df['ABONO'].str.replace(',', '').astype(float), errors='coerce')
+
     total_cargo = df['CARGO'][df['CARGO'] > 0].sum()
     total_abono = df['ABONO'][df['ABONO'] > 0].sum()
+
     count_cargo = df['CARGO'][df['CARGO'] > 0].count()
     count_abono = df['ABONO'][df['ABONO'] > 0].count()
+
     return df, total_cargo, total_abono, count_cargo, count_abono

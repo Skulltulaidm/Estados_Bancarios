@@ -12,8 +12,8 @@ import bbva
 
 # Para descargar archivos CSV
 def download_csv(df, filename="data.csv"):
-    csv = df.to_csv(index=False, encoding='utf-8-sig')  # Especifica el encoding aquí
-    b64 = base64.b64encode(csv.encode('utf-8-sig')).decode()  # Y también aquí
+    csv = df.to_csv(index=False, encoding='utf-8-sig')
+    b64 = base64.b64encode(csv.encode('utf-8-sig')).decode()
     href = f'<a href="data:file/csv;base64,{b64}" download="{filename}">Descargar archivo CSV</a>'
     st.markdown(href, unsafe_allow_html=True)
 
@@ -30,9 +30,7 @@ if uploaded_file is not None:
     st.write("Archivo subido. Procesando...")
     
     if option == 'Banregio':
-        # Utiliza la función de banregio.py para procesar el archivo
         df = banregio.process_pdf(uploaded_file)
-        # Muestra el DataFrame en la app
     elif option == 'Banbajio':
         df = banbajio.process_pdf(uploaded_file)
     elif option == 'Monex':
@@ -58,5 +56,4 @@ if uploaded_file is not None:
         st.write(f'Número de Abonos: {count_abono}')    
         
     st.write(df)
-    # Descargar como CSV
     download_csv(df, f"{option}_data.csv")
