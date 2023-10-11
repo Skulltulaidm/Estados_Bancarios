@@ -85,4 +85,6 @@ def process_pdf(uploaded_file):
     df['ABONO'] = pd.to_numeric(df['ABONO'].str.replace(',', '').astype(float), errors='coerce')
     total_cargo = df['CARGO'][df['CARGO'] > 0].sum()
     total_abono = df['ABONO'][df['ABONO'] > 0].sum()
-    return df, total_cargo, total_abono
+    count_cargo = df['CARGO'][df['CARGO'] > 0].count()
+    count_abono = df['ABONO'][df['ABONO'] > 0].count()
+    return df, total_cargo, total_abono, count_cargo, count_abono
