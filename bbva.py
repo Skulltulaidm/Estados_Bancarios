@@ -89,8 +89,8 @@ def process_pdf(uploaded_file):
     df = create_dataframe(matches)
     
     # Calcula los totales de retiros y depósitos
-    total_retiros = df['CARGO'].replace('[\$,]', '', regex=True).astype(float).sum()
-    total_depositos = df['ABONO'].replace('[\$,]', '', regex=True).astype(float).sum()
+    total_cargos = df['CARGO'].replace('[\$,]', '', regex=True).astype(float).sum()
+    total_abonos = df['ABONO'].replace('[\$,]', '', regex=True).astype(float).sum()
 
     # Devuelve el DataFrame y los totales
-    return df, total_retiros, total_depositos
+    return df, total_cargos, total_abonos
