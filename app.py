@@ -8,6 +8,7 @@ import banorteFormatoDesorden
 import banorteFormato2
 import santander
 import banamex
+import bbva
 
 # Para descargar archivos CSV
 def download_csv(df, filename="data.csv"):
@@ -20,7 +21,7 @@ def download_csv(df, filename="data.csv"):
 st.title("APP EIM Consultoria para conversor de Estados de Cuenta Bancarios a CSV")
 st.write("Selecciona tu banco y sube tu archivo PDF")
 
-option = st.selectbox("Selecciona tu banco", ("Banregio", "Banbajio", "Monex", "Banorte-1", "Banorte-2", "Santander", "Banamex"))
+option = st.selectbox("Selecciona tu banco", ("Banregio", "Banbajio", "Monex", "Banorte-1", "Banorte-2", "Santander", "Banamex", "BBVA"))
 
 uploaded_file = st.file_uploader("Sube tu archivo PDF", type=["pdf"])
 
@@ -46,7 +47,12 @@ if uploaded_file is not None:
         df, total_retiros, total_depositos = banamex.process_pdf(uploaded_file) 
         st.write("Es probable que la últimas o primeras líneas del Excel arroje información random del estado de cuenta, pero está fuera de los movimientos del mes.")  
         st.write(f'Total de Retiros: ${total_retiros:.2f}')
-        st.write(f'Total de Depósitos: ${total_depositos:.2f}')    
+        st.write(f'Total de Depósitos: ${total_depositos:.2f}')
+    elif option == 'BBVA':
+        df, total_retiros, total_depositos = bbva.process_pdf(uploaded_file) 
+        st.write("Es probable que la últimas o primeras líneas del Excel arroje información random del estado de cuenta, pero está fuera de los movimientos del mes.")  
+        st.write(f'Total de Retiros: ${total_retiros:.2f}')
+        st.write(f'Total de Depósitos: ${total_depositos:.2f}')      
         
     st.write(df)
     # Descargar como CSV
