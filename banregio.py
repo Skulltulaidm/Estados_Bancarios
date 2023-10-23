@@ -5,8 +5,7 @@ import pdfplumber
 def process_pdf(uploaded_file):
     """Procesa un archivo PDF y devuelve un DataFrame de Pandas."""
 
-    CARGO_KEYWORDS = ['Cobro de cheque']
-    ABONO_KEYWORDS = ['DEPOSITO']
+
 
     def extract_pdf_text(file):
         all_text = ""
@@ -35,6 +34,8 @@ def process_pdf(uploaded_file):
         for match in matches:
             cod_transacc = match[1]
             cantidad = match[3]
+            CARGO_KEYWORDS = ['Cobro de cheque']
+            ABONO_KEYWORDS = ['DEPOSITO']
 
             if "ABONO" in match[2]:
                 abono = cantidad
