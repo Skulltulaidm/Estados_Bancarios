@@ -5,7 +5,7 @@ import pandas as pd
 def process_pdf(uploaded_file):
     """Procesa un archivo PDF del banco BBVA y devuelve un DataFrame de Pandas."""
     
-    CARGO_CODES = ['T17', 'P14', 'S39', 'S40', 'X01', 'S39', 'S40', 'G30']
+    CARGO_CODES = ['T17', 'P14', 'S39', 'S40', 'X01', 'S39', 'S40', 'G30', 'C49', 'C50']
     CARGO_KEYWORDS = ['mopsa', 'PAGO FACTURA', 'Mopsa']
     CARGO_DESC_CODES = ["0164690214", "0482773643", "0116431607", "0116914225", "0105473098", "0119486771", "0476472370", "0112395312", "0100427152", "0114237803", "0115889189", "0111283014", "0450891053", "0132293021", "0119339779", "0166407420", "0115884411", "0112634511", "1540049667", "2775386152", "1273602788"]
 
