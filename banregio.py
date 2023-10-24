@@ -41,8 +41,11 @@ def process_pdf(uploaded_file):
                 abono = cantidad
                 cargo = '0'
             else:
-                cargo = cantidad if cod_transacc == 'TRA' or match[2] in CARGO_KEYWORDS else '0'
-                abono = cantidad if cod_transacc == 'INT' or match[2] in ABONO_KEYWORDS else '0'
+                cargo_condition = cod_transacc == 'TRA' or (cod_transacc == 'doc' and any(keyword in match[2] for keyword in CARGO_KEYWORDS))
+                abono_condition = cod_transacc == 'INT' or (cod_transacc == 'doc' and any(keyword in match[2] for keyword in ABONO_KEYWORDS))
+                
+                cargo = cantidad if cargo_condition else '0'
+                abono = cantidad if abono_condition else '0'
 
             dia = f"{match[0]}/{month[:3]}/{year[2:]}"
 
