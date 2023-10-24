@@ -30,7 +30,12 @@ if uploaded_file is not None:
     st.write("Archivo subido. Procesando...")
     
     if option == 'Banregio':
-        df = banregio.process_pdf(uploaded_file)
+        df, total_cargos, total_abonos, count_cargo, count_abono = banregio.process_pdf(uploaded_file) 
+        st.write("Es probable que la última línea del Excel arroje información random del estado de cuenta, pero está fuera de los movimientos del mes.")  
+        st.write(f'Total de Cargos: ${total_cargos:.2f}')
+        st.write(f'Total de Abonos: ${total_abonos:.2f}')  
+        st.write(f'Número de Cargos: {count_cargo}')
+        st.write(f'Número de Abonos: {count_abono}') 
     elif option == 'Banbajio':
         df = banbajio.process_pdf(uploaded_file)
     elif option == 'Monex':
