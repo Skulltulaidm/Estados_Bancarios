@@ -41,8 +41,8 @@ def process_pdf(uploaded_file):
                 abono = cantidad
                 cargo = '0'
             else:
-                cargo_condition = cod_transacc == 'TRA' or (cod_transacc == 'doc' and any(keyword in match[2] for keyword in CARGO_KEYWORDS))
-                abono_condition = cod_transacc == 'INT' or (cod_transacc == 'doc' and any(keyword in match[2] for keyword in ABONO_KEYWORDS))
+                cargo_condition = cod_transacc == 'TRA' or (cod_transacc == 'DOC' and any(keyword in match[2] for keyword in CARGO_KEYWORDS))
+                abono_condition = cod_transacc == 'INT' or (cod_transacc == 'DOC' and any(keyword in match[2] for keyword in ABONO_KEYWORDS))
                 
                 cargo = cantidad if cargo_condition else '0'
                 abono = cantidad if abono_condition else '0'
