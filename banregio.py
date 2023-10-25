@@ -12,10 +12,10 @@ def process_pdf(uploaded_file):
         r'(\d{1,3}(?:,\d{3})*\.\d{2})?\s+'  # CARGO/ABONO
         r'(\d{1,3}(?:,\d{3})*\.\d{2})?\s+'  # SALDO
     )
-    CARGO_KEYWORDS = ['Cobro de cheque']
-    ABONO_KEYWORDS = ['DEPOSITO']
-    CARGO_CODES = ['TRA']  # Añade más códigos según necesidad
-    ABONO_CODES = ['INT']  # Añade más códigos según necesidad
+    CARGO_KEYWORDS = ['Cobro de cheque', 'Traspaso a cuenta']
+    ABONO_KEYWORDS = ['DEPOSITO', 'ABONO', 'Recepcion de cuenta']
+    CARGO_CODES = ['TRA']
+    ABONO_CODES = ['INT']
     
     def extract_pdf_text(file):
         all_text = ""
