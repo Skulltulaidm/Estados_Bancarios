@@ -4,8 +4,8 @@ import fitz
 
 def process_pdf(file_path):
     # Palabras clave
-    DEPOSITO_KEYWORDS = ['ABONO', 'ABONO TRANSFERENCIA', ]
-    RETIRO_KEYWORDS = ['CARGO', 'MEMBRESIA', 'CARGO TRANSFERENCIA', 'PAGO TRANSFERENCIA']
+    DEPOSITO_KEYWORDS = ['ABONO', 'ABONO TRANSFERENCIA']
+    RETIRO_KEYWORDS = ['CARGO', 'MEMBRESIA', 'CARGO TRANSFERENCIA', 'PAGO TRANSFERENCIA', 'PAGO DE TARJETA', 'PAGO VIVIENDA', 'CGO']
 
     def read_pdf(file_path):
         with fitz.open(stream=file_path.read(), filetype="pdf") as pdf_document:
