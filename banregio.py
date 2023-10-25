@@ -27,6 +27,7 @@ def process_pdf(uploaded_file):
     def preprocess_text(text):
         return text
 
+...
     def extract_data(all_text):
         matches = PATTERN.findall(all_text)
         data = []
@@ -34,7 +35,12 @@ def process_pdf(uploaded_file):
         if date_match:
             start_day, end_day, month, year = date_match.groups()
 
+        prev_day = 0  # Inicializamos con 0 para la primera fecha
+
         for match in matches:
+            current_day = int(match[0])
+            invert_conditions = current_day < prev_day
+
             cod_transacc = match[1]
             concepto = match[2]
 
@@ -45,9 +51,12 @@ def process_pdf(uploaded_file):
                 cargo = match[3]
                 abono = '0'
             else:
-                # Si las keywords no se encontraron, busca por codigos
                 cargo = match[3] if cod_transacc in CARGO_CODES else '0'
                 abono = match[3] if cod_transacc in ABONO_CODES else '0'
+
+            # Invertir las condiciones si la fecha actual es menor que la anterior
+            if invert_conditions:
+                cargo, abono = abono, cargo
 
             dia = f"{match[0]}/{month[:3]}/{year[2:]}"
             data.append({
@@ -58,7 +67,12 @@ def process_pdf(uploaded_file):
                 'ABONO': abono,
                 'SALDO': match[4]
             })
+
+            prev_day = current_day  # Actualizar la fecha anterior para la siguiente iteración
+
         return data
+...
+
 
     all_text = extract_pdf_text(uploaded_file)
     all_text = preprocess_text(all_text)
