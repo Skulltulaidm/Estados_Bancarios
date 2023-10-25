@@ -45,7 +45,12 @@ if uploaded_file is not None:
     elif option == 'Banorte-2':
         df = banorteFormato2.process_pdf(uploaded_file)
     elif option == 'Santander':
-        df = santander.process_pdf(uploaded_file)
+        df_flexible, total_retiro, total_deposito, count_retiro, count_deposito = santander.process_pdf(uploaded_file) 
+        st.write("Es probable que la última línea del Excel arroje información random del estado de cuenta, pero está fuera de los movimientos del mes.")  
+        st.write(f'Total de Cargos: ${total_retiro:.2f}')
+        st.write(f'Total de Abonos: ${total_deposito:.2f}')  
+        st.write(f'Número de Cargos: {count_retiro}')
+        st.write(f'Número de Abonos: {count_deposito}')  
     elif option == 'Banamex':
         df, total_retiros, total_depositos = banamex.process_pdf(uploaded_file) 
         st.write("Este código funciona para ambos formatos de Banamex")  
