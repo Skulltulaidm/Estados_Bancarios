@@ -45,10 +45,10 @@ if uploaded_file is not None:
         df = banorteFormato2.process_pdf(uploaded_file)
     elif option == 'Santander':
         df, total_retiro, total_deposito, count_retiro, count_deposito = santander.process_pdf(uploaded_file)
-        st.write(f'Total de Cargos: ${total_retiro:.2f}')
-        st.write(f'Total de Abonos: ${total_deposito:.2f}')
-        st.write(f'Número de Cargos: {count_retiro}')
-        st.write(f'Número de Abonos: {count_deposito}')
+        st.write(f'Total de retiros: ${total_retiro:.2f}')
+        st.write(f'Total de depositos: ${total_deposito:.2f}')
+        st.write(f'Número de retiros: {count_retiro}')
+        st.write(f'Número de depositos: {count_deposito}')
     elif option == 'Banamex':
         df, total_retiros, total_depositos = banamex.process_pdf(uploaded_file) 
         st.write("Este código funciona para ambos formatos de Banamex")  
