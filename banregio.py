@@ -7,7 +7,7 @@ def process_pdf(uploaded_file):
     
     PATTERN = re.compile(
         r'(\d{2})\s+'  # Dia
-        r'([A-Z]{3})\s+'  # COD. TRANSACC
+        r'([A-Z]{3})\s*'  # COD. TRANSACC
         r'(.+?)\s+'  # CONCEPTO
         r'(\d{1,3}(?:,\d{3})*\.\d{2})?\s+'  # CARGO/ABONO
         r'(\d{1,3}(?:,\d{3})*\.\d{2})?\s+'  # SALDO
