@@ -27,7 +27,6 @@ def process_pdf(uploaded_file):
     def preprocess_text(text):
         return text
 
-...
     def extract_data(all_text):
         matches = PATTERN.findall(all_text)
         data = []
@@ -71,8 +70,6 @@ def process_pdf(uploaded_file):
             prev_day = current_day  # Actualizar la fecha anterior para la siguiente iteración
 
         return data
-...
-
 
     all_text = extract_pdf_text(uploaded_file)
     all_text = preprocess_text(all_text)
