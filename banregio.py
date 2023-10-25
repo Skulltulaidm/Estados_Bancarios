@@ -14,7 +14,7 @@ def process_pdf(uploaded_file):
     )
     CARGO_KEYWORDS = ['Cobro de cheque', 'Traspaso a cuenta']
     ABONO_KEYWORDS = ['DEPOSITO', 'ABONO', 'Recepcion de cuenta']
-    CARGO_CODES = ['TRA']
+    CARGO_CODES = ['TRA', 'DIV']
     ABONO_CODES = ['INT']
     
     def extract_pdf_text(file):
