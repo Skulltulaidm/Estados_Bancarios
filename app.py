@@ -44,7 +44,7 @@ if uploaded_file is not None:
     elif option == 'Banorte-2':
         df = banorteFormato2.process_pdf(uploaded_file)
     elif option == 'Santander':
-        df_flexible, total_retiro, total_deposito, count_retiro, count_deposito = santander.process_pdf(uploaded_file)
+        df, total_retiro, total_deposito, count_retiro, count_deposito = santander.process_pdf(uploaded_file)
         st.write(f'Total de Cargos: ${total_retiro:.2f}')
         st.write(f'Total de Abonos: ${total_deposito:.2f}')
         st.write(f'Número de Cargos: {count_retiro}')
