@@ -14,6 +14,8 @@ def process_pdf(uploaded_file):
     )
     CARGO_KEYWORDS = ['Cobro de cheque']
     ABONO_KEYWORDS = ['DEPOSITO']
+    CARGO_CODES = ['TRA']  # Añade más códigos según necesidad
+    ABONO_CODES = ['INT']  # Añade más códigos según necesidad
     
     def extract_pdf_text(file):
         all_text = ""
@@ -23,7 +25,6 @@ def process_pdf(uploaded_file):
         return all_text
     
     def preprocess_text(text):
-        # Esta función se puede expandir para futuras necesidades de limpieza/preprocesamiento
         return text
 
     def extract_data(all_text):
@@ -35,17 +36,18 @@ def process_pdf(uploaded_file):
 
         for match in matches:
             cod_transacc = match[1]
-            cantidad = match[3]
+            concepto = match[2]
 
-            if "ABONO" in match[2]:
-                abono = cantidad
+            if any(keyword in concepto for keyword in ABONO_KEYWORDS):
+                abono = match[3]
                 cargo = '0'
+            elif any(keyword in concepto for keyword in CARGO_KEYWORDS):
+                cargo = match[3]
+                abono = '0'
             else:
-                cargo_condition = cod_transacc == 'TRA' or (cod_transacc == 'DOC' and any(keyword in match[2] for keyword in CARGO_KEYWORDS))
-                abono_condition = cod_transacc == 'INT' or (cod_transacc == 'DOC' and any(keyword in match[2] for keyword in ABONO_KEYWORDS))
-                
-                cargo = cantidad if cargo_condition else '0'
-                abono = cantidad if abono_condition else '0'
+                # Si las keywords no se encontraron, busca por codigos
+                cargo = match[3] if cod_transacc in CARGO_CODES else '0'
+                abono = match[3] if cod_transacc in ABONO_CODES else '0'
 
             dia = f"{match[0]}/{month[:3]}/{year[2:]}"
             data.append({
