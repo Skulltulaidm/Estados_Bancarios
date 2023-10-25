@@ -35,10 +35,14 @@ def process_pdf(uploaded_file):
             start_day, end_day, month, year = date_match.groups()
 
         prev_day = 0  # Inicializamos con 0 para la primera fecha
+        invert_all = False  # Esta variable determinará si se invierten todas las condiciones en iteraciones siguientes
 
         for match in matches:
             current_day = int(match[0])
-            invert_conditions = current_day < prev_day
+            
+            # Si encontramos una fecha menor y no hemos activado el interruptor, lo activamos
+            if current_day < prev_day and not invert_all:
+                invert_all = True
 
             cod_transacc = match[1]
             concepto = match[2]
@@ -53,8 +57,8 @@ def process_pdf(uploaded_file):
                 cargo = match[3] if cod_transacc in CARGO_CODES else '0'
                 abono = match[3] if cod_transacc in ABONO_CODES else '0'
 
-            # Invertir las condiciones si la fecha actual es menor que la anterior
-            if invert_conditions:
+            # Invertir las condiciones si invert_all está activado
+            if invert_all:
                 cargo, abono = abono, cargo
 
             dia = f"{match[0]}/{month[:3]}/{year[2:]}"
