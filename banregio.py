@@ -12,8 +12,8 @@ def process_pdf(uploaded_file):
         r'(\d{1,3}(?:,\d{3})*\.\d{2})?\s+'  # CARGO/ABONO
         r'(\d{1,3}(?:,\d{3})*\.\d{2})?\s+'  # SALDO
     )
-    CARGO_KEYWORDS = ['Cobro de cheque', 'Traspaso a cuenta']
-    ABONO_KEYWORDS = ['DEPOSITO', 'ABONO', 'Recepcion de cuenta']
+    CARGO_KEYWORDS = ['Cobro de cheque', 'Traspaso a cuenta', 'Comision']
+    ABONO_KEYWORDS = ['DEPOSITO', 'ABONO', 'Recepcion de cuenta', 'LAMINA Y PLACA COMERCIAL', 'TRANSFERENCIA']
     CARGO_CODES = ['TRA', 'DIV']
     ABONO_CODES = ['INT']
     
